@@ -40,6 +40,7 @@ Lisp::validateSyntax(SynNode *leaf, int paramCount, const char *name)
   if (paramCount == -1)
     return LINF_SUCCEEDED;
 
+  file_off line = leaf->line;
   int count = 0;
   while (leaf)
     {
@@ -48,7 +49,7 @@ Lisp::validateSyntax(SynNode *leaf, int paramCount, const char *name)
     }
   if (paramCount != count)
     {
-      Lisp::throwError(leaf->line, 0, "'%s' syntax error.", name);
+      Lisp::throwError(line, 0, "'%s' syntax error.", name);
       return LERR_SYNTAX_ERROR;
     }
   return LINF_SUCCEEDED;
