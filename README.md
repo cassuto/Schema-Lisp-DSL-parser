@@ -47,7 +47,7 @@ This project is still in a very alpha stage, I'm planing to implement the `garba
 
 ## Build this project:
 Requirement:
-GNU developing environment(such Linux that has GCC, MinGW, CygWin, etc.)
+GNU developing environment(such as Linux with GCC. Windows with MinGW, CygWin, etc.)
 
 Do the configuration in Makefile, set the variable named CONFIG_* as "y" (yes) or "n" (no)
 
@@ -68,26 +68,30 @@ you will find an executable file and an archive file that stores static objects.
         (cond ((= n 0) "is zero")
               ((= n 1) "is one")
               (else "else."))))
-(x 0)
 
-;
-; string
-;
-(set! s "Hello world!")
-(display s)
+(begin
+    ;
+    ; call the procedure
+    ;
+    (x 0)
 
-;
-; a mess about list :-(
-;
-(define y (quote (2 3 4 5 6 7)))
-(display (cdr y))
-(set-cdr! y 3.1415926)
-(display (cdr y))
+    ;
+    ; string
+    ;
+    (display "Hello world!")
 
-;
-; float operation
-;
-(+ 3.14 6.28 12.56)
+    ;
+    ; list
+    ;
+    (display
+        (cdr
+            (quote (1 .2 .3 1.4 2.5 6 7))))
+
+    ;
+    ; float operation
+    ;
+    (display (- (* 2 (+ 3.14 6.28 12.56)) 3))
+)
 
 )
 ```
