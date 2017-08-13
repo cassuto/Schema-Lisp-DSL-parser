@@ -5,7 +5,7 @@ DSL-Lisp is a tiny interpreter that evaluates the lisp expression. It's easy to 
 
 It's based on `scheme-lisp`, which is a dialect of lisp. Scheme is different from common-lisp, concise and efficient on some particular occasions.
 
-We have implemented some primitive functions of schema, there followed a list.
+We have implemented some primitive functions of scheme, there followed a list.
 
 ```scheme
 ;; primitive-funcs
