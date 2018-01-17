@@ -16,8 +16,10 @@
 #ifndef LISPDSL_H_
 #define LISPDSL_H_
 
-#include <assert.h>
+#include <cassert>
 #include <cstddef>
+#include <cstdarg>
+
 #include <iostream>
 
 namespace DSL {
@@ -743,6 +745,8 @@ struct Token
   const char *symbol;
   SynNode * (Lisp::*eval)(SynNode *leaf, EnvSP envsp, __OUT int &rc);
 };
+
+#define _MAX_MSG_BUFFER 1024
 
 
 /***************************************************

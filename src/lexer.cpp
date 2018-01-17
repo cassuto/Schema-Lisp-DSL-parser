@@ -108,38 +108,36 @@ Lexer::lexMisc(LexNode *lex, char c)
   int rc = LINF_SUCCEEDED;
   int i = 0;
   bool pair = false;
-  char buff[2];
 
+  char buff[2];
   buff[0] = c;
   buff[1] = 0;
-
   lex->m_word.append(buff);
 
   if (c == '"')
       pair = true;
   while ((c = stream->Getchar()) != STREAM_EOF)
     {
-      if ( c != ')'
-          && c != '('
-          && c != ';'
-          && (!IsSpace(c)
-          || pair))
+      if ( !pair && ( c == ')'
+                   || c == '('
+                   || c == ';'
+                   || IsSpace(c) ) )
         {
-          buff[i++] = c;
-          /* handle the pair */
-          if (c == '"')
-            pair = !pair;
-          /* handle the overflow */
-          if (i == sizeof(buff))
-            {
-              rc = lex->m_word.append(buff, sizeof(buff));
-              if (LP_FAILURE(rc))
-                break;
-              i = 0;
-            }
+          break;
         }
-      else
-        break;
+      buff[i++] = c;
+
+      /* handle the overflow */
+      if (i == sizeof(buff))
+        {
+          rc = lex->m_word.append(buff, sizeof(buff));
+          if (LP_FAILURE(rc))
+            break;
+          i = 0;
+        }
+      /* handle the pair */
+      if (c == '"')
+          pair = !pair;
     }
 
   /*
@@ -149,6 +147,11 @@ Lexer::lexMisc(LexNode *lex, char c)
     {
       if (i)
         rc = lex->m_word.append(buff, i/*len*/);
+    }
+
+  if (pair)
+    {
+      rc = Lisp::throwError(lex->m_line, 0, "String '\"' unpaired!\n");
     }
 
   stream->UnGetchar(c);

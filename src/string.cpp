@@ -29,11 +29,11 @@ namespace DSL {
 ////////////////////////////////////////////////////////////////////////////////
 
 StringPool::StringPool()
-  : heap_buff(0),
-    len(0),
-    buffsize(0),
-    inheap(false),
-    curpos(0)
+  : heap_buff (0),
+    len (0),
+    buffsize (0),
+    inheap (false),
+    curpos (0)
 {
   memset(buff, 0, sizeof(buff));
 }
@@ -68,6 +68,7 @@ StringPool::append(const char *src, size_t lensrc) {
     { /* using the heap buffer */
       if (lenwrSum > buffsize)
         {
+          if (buffsize == 0) buffsize = len;
           rc = resizeBuffer(buffsize + lenwr);
           if (LP_SUCCESS(rc))
             {

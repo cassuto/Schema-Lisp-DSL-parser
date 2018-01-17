@@ -83,9 +83,15 @@ Lisp::Lisp()
 int
 Lisp::throwError(file_off line, file_off pos, const char *msg, ...)
 {
-  //!todo format string
+  va_list args;
+  va_start (args, msg);
+
+  char buff[_MAX_MSG_BUFFER];
+  vsnprintf(buff, sizeof(buff), msg, args);
+  va_end(args);
+
   LOG(ERROR) << "error: line:" << line << ":" << pos
-      << " " << msg << "\n";
+      << " " << buff << "\n";
   return LERR_THROW_ERROR;
 }
 
